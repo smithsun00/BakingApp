@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- The fix to shrinking video height was found here:
+             https://github.com/google/ExoPlayer/issues/1827 -->
+            <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+                android:id="@+id/step_video_player"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:resize_mode="fixed_width"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="@dimen/layout_Editor_absolute_x" />
+
+            <View
+                android:id="@+id/seperator1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/list_separator_height"
+                android:background="@color/colorGreyLight"
+                app:layout_constraintTop_toBottomOf="@+id/step_video_player"
+                tools:layout_editor_absoluteX="@dimen/layout_Editor_absolute_x" />
+
+            <TextView
+                android:id="@+id/step_description_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/step_description_padding_left_right"
+                android:paddingTop="@dimen/step_description_padding_top_bottom"
+                android:paddingRight="@dimen/step_description_padding_left_right"
+                android:paddingBottom="@dimen/step_description_padding_top_bottom"
+                app:layout_constraintTop_toBottomOf="@+id/seperator1"
+                tools:layout_editor_absoluteX="@dimen/layout_Editor_absolute_x"
+                tools:text="@string/step_description_tv" />
+
+            <View
+                android:id="@+id/seperator2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/list_separator_height"
+                android:background="@color/colorGreyLight"
+                app:layout_constraintTop_toBottomOf="@+id/step_description_tv"
+                tools:layout_editor_absoluteX="@dimen/layout_Editor_absolute_x" />
+
+            <ImageView
+                android:id="@+id/previus_step_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/step_next_previous_button_margin"
+                android:layout_marginLeft="@dimen/step_next_previous_button_margin"
+                android:layout_marginTop="@dimen/step_next_previous_button_margin"
+                android:scaleX="@integer/previous_step_button_image_x_scale"
+                android:contentDescription="@string/next_step_arrow_button_cd"
+                android:src="@drawable/nextarraow"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seperator2" />
+
+            <ImageView
+                android:id="@+id/next_step_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/step_next_previous_button_margin"
+                android:layout_marginEnd="@dimen/step_next_previous_button_margin"
+                android:layout_marginRight="@dimen/step_next_previous_button_margin"
+                android:contentDescription="@string/previous_step_arrow_button_cd"
+                android:src="@drawable/nextarraow"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seperator2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</layout>

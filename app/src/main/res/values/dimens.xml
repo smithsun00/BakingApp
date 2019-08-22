@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+Refer to App Widget Documentation for margin information
+http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
+    -->
+
+    <!-- MainActivity -->
+    <dimen name="main_activity_offline_text_size">22sp</dimen>
+
+    <!-- Widget -->
+    <dimen name="widget_margin">8dp</dimen>
+    <dimen name="widget_label_text_margin">2dp</dimen>
+    <dimen name="widget_label_text_padding_left_right">8dp</dimen>
+    <dimen name="widget_label_text_size">24sp</dimen>
+    <dimen name="widget_ingredients_text_margin">8dp</dimen>
+    <dimen name="widget_ingredients_text_size">18sp</dimen>
+
+    <dimen name="fragment_recipe_details_list_padding">8dp</dimen>
+
+    <!-- Fragment step details -->
+    <dimen name="list_separator_height">1dp</dimen>
+    <dimen name="layout_Editor_absolute_x">0dp</dimen>
+    <dimen name="step_description_padding_left_right">16dp</dimen>
+    <dimen name="step_description_padding_top_bottom">8dp</dimen>
+    <dimen name="step_next_previous_button_margin">16dp</dimen>
+
+    <!-- Ingredients card layout -->
+    <dimen name="ingredients_card_label_padding_left_right">16dp</dimen>
+    <dimen name="ingredients_card_label_padding_top_bottom">8dp</dimen>
+    <dimen name="ingredients_card_label_text_size">20sp</dimen>
+    <dimen name="ingredients_card_text_padding_left_right">24dp</dimen>
+    <dimen name="ingredients_card_text_padding_top_bottom">8dp</dimen>
+    <dimen name="ingredients_card_text_text_size">16sp</dimen>
+
+    <!-- Recipe card layout -->
+    <dimen name="recipe_card_name_text_width">288dp</dimen>
+    <dimen name="recipe_card_name_text_height">54dp</dimen>
+    <dimen name="recipe_card_name_text_margin_left">8dp</dimen>
+    <dimen name="recipe_card_name_text_margin_top">8dp</dimen>
+    <dimen name="recipe_card_name_text_padding_left_right">16dp</dimen>
+    <dimen name="recipe_card_name_text_padding_top_bottom">8dp</dimen>
+    <dimen name="recipe_card_name_text_size">25sp</dimen>
+    <dimen name="recipe_card_serving_label_margin_left">8dp</dimen>
+    <dimen name="recipe_card_serving_label_padding_top">8dp</dimen>
+    <dimen name="recipe_card_serving_label_padding_left_right">16dp</dimen>
+    <dimen name="recipe_card_serving_label_text_size">16sp</dimen>
+    <dimen name="recipe_card_serving_text_margin_left">8dp</dimen>
+    <dimen name="recipe_card_serving_text_padding_left">8dp</dimen>
+    <dimen name="recipe_card_serving_text_padding_bottom">8dp</dimen>
+    <dimen name="recipe_card_serving_text_text_size">16sp</dimen>
+    <dimen name="recipe_card_recipe_image_height">100dp</dimen>
+    <dimen name="recipe_card_recipe_logo_width">60dp</dimen>
+    <dimen name="recipe_card_recipe_logo_height">60dp</dimen>
+    <dimen name="recipe_card_recipe_logo_margin_top">16dp</dimen>
+    <dimen name="recipe_card_recipe_logo_margin_right">20dp</dimen>
+
+    <!-- Step card -->
+    <dimen name="step_card_step_number_padding_left">16dp</dimen>
+    <dimen name="step_card_step_number_padding_top">8dp</dimen>
+    <dimen name="step_card_step_number_padding_bottom">4dp</dimen>
+    <dimen name="step_card_step_number_text_size">14sp</dimen>
+    <dimen name="step_card_short_description_padding_left_right">16dp</dimen>
+    <dimen name="step_card_short_description_padding_bottom">8dp</dimen>
+    <dimen name="step_card_short_description_text_size">20sp</dimen>
+
+</resources>

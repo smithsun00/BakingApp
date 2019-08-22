@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_item_show_selected_recipe_in_widget"
+        android:title="@string/menu_display_in_widget"
+        app:showAsAction="never"
+        android:orderInCategory="1"/>
+    <item
+        android:id="@+id/add_to_favorite"
+        android:checkable="true"
+        android:checked="false"
+        android:icon="@drawable/star_white"
+        android:title="@string/mi_add_to_favorite_title"
+        app:showAsAction="ifRoom" />
+</menu>

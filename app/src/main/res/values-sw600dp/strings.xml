@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">BakingApp</string>
+
+    <!-- Labels -->
+    <string name="recipe_card_servings_label">Servings:</string>
+    <string name="imgredients_card_label">Ingredients</string>
+    <string name="menu_display_in_widget">Show in widget</string>
+    <string name="step_card_step_number_text">Step</string>
+    <string name="sort_by_label">Sort by</string>
+
+    <!-- Menu -->
+    <string name="menu_item_spinner_label_sort_by">Sort by</string>
+    <string name="menu_item_spinner_option_default">Default</string>
+    <string name="menu_item_spinner_option_saved">Favorite</string>
+    <string-array name="action_get_recipe_by">
+        <item>Default</item>
+        <item>Favorite</item>
+    </string-array>
+    <string name="mi_add_to_favorite_title">Save</string>
+
+    <!-- Messages -->
+    <string name="message_recipe_added_to_db">The recipe was added to your favorite</string>
+    <string name="message_recipe_removed_from_db">The recipe was removed from your favorite</string>
+
+    <!-- Content Descriptions -->
+    <string name="next_step_arrow_button_cd">A button to go to the next step page.</string>
+    <string name="previous_step_arrow_button_cd">A button to go to the previous step page.</string>
+    <string name="recipe_card_related_image_cd">A recipe related image.</string>
+    <string name="recipe_card_logo_cd">A recipe related image.</string>
+
+    <!-- Error messages -->
+    <string name="no_ingredients_found">No ingredients found for the step.</string>
+    <string name="no_recipe_selected">No recipe was selected.\nPlease select a recipe first.</string>
+    <string name="offline_mode_menu_items_blocked_message">Only Sort by Favorite list type is available in Offline mode</string>
+    <string name="no_recipe_was_added_to_database_yet">No recipe was saved yet</string>
+    <string name="main_activity_offline_no_data_message">No internet connection or invalid data occurred and no saved recipes found.\n Please try again later.</string>
+
+    <!-- Placeholder text -->
+    <string name="widget_recipe_name_placeholder">Baking App</string>
+    <string name="recipe_card_name_placeholder">Recipe Name Here!</string>
+    <string name="recipe_card_servings_placeholder">5</string>
+    <string name="imgredients_card_text_placeholder">Select a recipe to be displayed here</string>
+    <string name="step_card_number_tv">Step 1</string>
+    <string name="step_description_tv">To go over this step you should make yourself ready by going here and there.
+         Also you should drink a whole bottle of water standing on your head after you finish.</string>
+    <string name="step_card_short_description_placeholder">Step description is a nice thing.
+         In this step we will take as many eggs as possible and throw them out the window. yes?</string>
+
+    <!-- Integers -->
+    <integer name="recipe_list_num_column">2</integer>
+    <integer name="list_item_space">14</integer>
+    <integer name="previous_step_button_image_x_scale">-1</integer>
+
+    <!-- Bools -->
+    <bool name="has_internet">true</bool>
+    <bool name="no_internet">false</bool>
+    <bool name="next_step_arrow_clicked">true</bool>
+    <bool name="previous_step_arrow_clicked">false</bool>
+    <bool name="test_local_response">true</bool>
+
+    <!-- Content description -->
+    <string name="widget_recipe_name_content_Description">This is a title representing the name of the last selected recipe.</string>
+    <string name="widget_recipe_ingredients_content_Description">This is a text representing the ingredients of the last selected recipe.</string>
+</resources>

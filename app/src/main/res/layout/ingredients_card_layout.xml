@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite">
+        <TextView
+            android:id="@+id/ingredients_card_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/imgredients_card_label"
+            android:paddingLeft="@dimen/ingredients_card_label_padding_left_right"
+            android:paddingRight="@dimen/ingredients_card_label_padding_left_right"
+            android:paddingStart="@dimen/ingredients_card_label_padding_left_right"
+            android:paddingEnd="@dimen/ingredients_card_label_padding_left_right"
+            android:paddingTop="@dimen/ingredients_card_label_padding_top_bottom"
+            android:paddingBottom="@dimen/ingredients_card_label_padding_top_bottom"
+            android:textSize="@dimen/ingredients_card_label_text_size"
+            android:fontFamily="sans-serif-condensed"
+            android:background="@color/colorAccent"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/list_separator_height"
+            android:background="@color/colorGreyBright"/>
+
+        <TextView
+            android:id="@+id/ingredients_card_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:paddingStart="@dimen/ingredients_card_text_padding_left_right"
+            android:paddingLeft="@dimen/ingredients_card_text_padding_left_right"
+            android:paddingRight="@dimen/ingredients_card_text_padding_left_right"
+            android:paddingEnd="@dimen/ingredients_card_text_padding_left_right"
+            android:paddingTop="@dimen/ingredients_card_text_padding_top_bottom"
+            android:paddingBottom="@dimen/ingredients_card_text_padding_top_bottom"
+            android:textSize="@dimen/ingredients_card_text_text_size"
+            tools:text="@string/imgredients_card_text_placeholder" />
+
+    </LinearLayout>
+</layout>

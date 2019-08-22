@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <!-- This is used when a user rotate device to landscape from portrait while in step details page (video)-->
+    <View
+        android:id="@+id/go_back_to_previous_activity_on_tablet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</FrameLayout>

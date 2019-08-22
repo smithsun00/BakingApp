@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/sort_resipes_spinner"
+        android:title="@string/menu_item_spinner_label_sort_by"
+        app:actionViewClass="android.widget.Spinner"
+        android:orderInCategory="1"
+        app:showAsAction="never">
+        <menu>
+            <item
+                android:id="@+id/sort_by_default"
+                android:title="@string/menu_item_spinner_option_default"
+                android:orderInCategory="1"/>
+            <item
+                android:id="@+id/sort_by_saved"
+                android:title="@string/menu_item_spinner_option_saved"
+                android:orderInCategory="2"/>
+        </menu>
+    </item>
+</menu>

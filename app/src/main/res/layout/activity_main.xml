@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:background="@color/colorGreyBright">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recipe_list_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            />
+        <TextView
+            android:id="@+id/no_internet_message_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/colorBlack"
+            android:text="@string/main_activity_offline_no_data_message"
+            android:textSize="@dimen/main_activity_offline_text_size"
+            android:gravity="center"
+            android:fontFamily="sans-serif"
+            android:visibility="invisible"/>
+
+    </FrameLayout>
+</layout>

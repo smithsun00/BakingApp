@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/fragment_recipe_details_list_padding"
+        android:background="@color/colorGreyBright">
+        <!-- StepCards recycler view -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recipe_step_list_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+    </FrameLayout>
+</layout>

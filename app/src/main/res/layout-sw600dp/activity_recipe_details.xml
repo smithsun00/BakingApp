@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recipe_details_activity"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false">
+    <!-- A place to set RecipeDetailsListFrag -->
+    <fragment
+        android:id="@+id/master_list_fragment"
+        android:name="com.example.bakingapp.RecipeDetailsListFragment"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:scaleType="centerInside"/>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/darker_gray"/>
+
+    <!-- This will be switched between StepDetailsFrag. and IngredientsCardFrag. -->
+    <FrameLayout
+        android:id="@+id/step_details_fragment_landtablet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

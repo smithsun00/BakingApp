@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/baking_widget_container"
+    android:background="@color/colorWhite"
+    android:padding="@dimen/widget_margin"
+    android:orientation="vertical">
+
+    <!-- Recipe name -->
+    <TextView
+        android:id="@+id/widget_recipe_name_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/widget_label_text_margin"
+        android:paddingLeft="@dimen/widget_label_text_padding_left_right"
+        android:paddingStart="@dimen/widget_label_text_padding_left_right"
+        android:paddingRight="@dimen/widget_label_text_padding_left_right"
+        android:paddingEnd="@dimen/widget_label_text_padding_left_right"
+        android:contentDescription="@string/widget_recipe_name_content_Description"
+        android:text="@string/widget_recipe_name_placeholder"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/widget_label_text_size"
+        android:background="@color/colorAccent"
+        android:textStyle="bold|italic" />
+
+    <!-- Recipe's ingredients -->
+    <TextView
+        android:id="@+id/widget_ingredients_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/widget_ingredients_text_margin"
+        android:contentDescription="@string/widget_recipe_ingredients_content_Description"
+        android:text="@string/imgredients_card_text_placeholder"
+        android:textColor="@color/colorGreyDark"
+        android:textSize="@dimen/widget_ingredients_text_size" />
+
+</LinearLayout>

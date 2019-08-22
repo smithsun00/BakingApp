@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite">
+
+            <TextView
+                android:id="@+id/recipe_name_tv"
+                android:layout_width="@dimen/recipe_card_name_text_width"
+                android:layout_height="@dimen/recipe_card_name_text_height"
+                android:layout_marginStart="@dimen/recipe_card_name_text_margin_left"
+                android:layout_marginLeft="@dimen/recipe_card_name_text_margin_left"
+                android:layout_marginTop="@dimen/recipe_card_name_text_margin_top"
+                android:fontFamily="sans-serif-black"
+                android:paddingStart="@dimen/recipe_card_name_text_padding_left_right"
+                android:paddingLeft="@dimen/recipe_card_name_text_padding_left_right"
+                android:paddingRight="@dimen/recipe_card_name_text_padding_left_right"
+                android:paddingEnd="@dimen/recipe_card_name_text_padding_left_right"
+                android:paddingTop="@dimen/recipe_card_name_text_padding_top_bottom"
+                android:paddingBottom="@dimen/recipe_card_name_text_padding_top_bottom"
+                android:textSize="@dimen/recipe_card_name_text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/recipe_card_name_placeholder" />
+
+            <TextView
+                android:id="@+id/recipe_card_details_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/recipe_card_serving_label_margin_left"
+                android:layout_marginLeft="@dimen/recipe_card_serving_label_margin_left"
+                android:fontFamily="sans-serif"
+                android:paddingStart="@dimen/recipe_card_serving_label_padding_left_right"
+                android:paddingLeft="@dimen/recipe_card_serving_label_padding_left_right"
+                android:paddingRight="@dimen/recipe_card_serving_label_padding_left_right"
+                android:paddingEnd="@dimen/recipe_card_serving_label_padding_left_right"
+                android:paddingBottom="@dimen/recipe_card_serving_label_padding_top"
+                android:text="@string/recipe_card_servings_label"
+                android:textSize="@dimen/recipe_card_serving_label_text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_name_tv" />
+
+            <TextView
+                android:id="@+id/recipe_servings_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/recipe_card_serving_text_margin_left"
+                android:layout_marginLeft="@dimen/recipe_card_serving_text_margin_left"
+                android:fontFamily="sans-serif"
+                android:paddingStart="@dimen/recipe_card_serving_text_padding_left"
+                android:paddingLeft="@dimen/recipe_card_serving_text_padding_left"
+                android:paddingBottom="@dimen/recipe_card_serving_text_padding_bottom"
+                android:textSize="@dimen/recipe_card_serving_text_text_size"
+                app:layout_constraintStart_toEndOf="@+id/recipe_card_details_textView"
+                app:layout_constraintTop_toTopOf="@+id/recipe_card_details_textView"
+                tools:text="@string/recipe_card_servings_placeholder" />
+
+            <!-- Recipe Image : this will be set invisible incase we have no image for it -->
+            <ImageView
+                android:id="@+id/recipe_image_iv"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/recipe_card_recipe_image_height"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/recipe_card_related_image_cd"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_card_details_textView"
+                tools:layout_editor_absoluteX="@dimen/layout_editor_absolute_x" />
+
+            <ImageView
+                android:id="@+id/recipe_logo_iv"
+                android:layout_width="@dimen/recipe_card_recipe_logo_width"
+                android:layout_height="@dimen/recipe_card_recipe_logo_height"
+                android:layout_marginTop="@dimen/recipe_card_recipe_logo_margin_top"
+                android:layout_marginEnd="@dimen/recipe_card_recipe_logo_margin_right"
+                android:layout_marginRight="@dimen/recipe_card_recipe_logo_margin_right"
+                android:contentDescription="@string/recipe_card_logo_cd"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/recipe_logo" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
