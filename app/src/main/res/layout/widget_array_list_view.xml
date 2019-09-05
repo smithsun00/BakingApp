@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/widget_array_list_container"
+        android:background="@color/colorWhite">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <!-- Recipe name -->
+        <TextView
+            android:id="@+id/widget_recipe_name_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/widget_label_text_margin"
+            android:paddingLeft="@dimen/widget_label_text_padding_left_right"
+            android:paddingStart="@dimen/widget_label_text_padding_left_right"
+            android:paddingRight="@dimen/widget_label_text_padding_left_right"
+            android:paddingEnd="@dimen/widget_label_text_padding_left_right"
+            android:contentDescription="@string/widget_recipe_name_content_Description"
+            android:text="@string/widget_recipe_name_placeholder"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/widget_label_text_size"
+            android:background="@color/colorAccent"
+            android:textStyle="bold|italic" />
+
+        <!-- Ingredient list -->
+        <ListView
+            android:id="@+id/ingredient_list_lv"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content" />
+
+        <!-- Recipe Logo -->
+        <ImageView
+            android:id="@+id/empty_view"
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/recipe_logo"/>
+    </LinearLayout>
+</FrameLayout>

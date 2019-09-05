@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:padding="5dp">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/ingredient_quantity_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:paddingLeft="5dp"
+            android:paddingStart="5dp"
+            android:paddingRight="10dp"
+            android:paddingEnd="10dp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/colorBlack"
+            tools:text="2"
+            />
+
+        <TextView
+            android:id="@+id/ingredint_measure_unit_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:paddingLeft="5dp"
+            android:paddingStart="5dp"
+            android:paddingRight="5dp"
+            android:paddingEnd="5dp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/colorGreyDark"
+            tools:text="UNIT"
+            />
+
+        <TextView
+            android:id="@+id/ingredint_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:paddingLeft="5dp"
+            android:paddingStart="5dp"
+            android:paddingRight="5dp"
+            android:paddingEnd="5dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="@color/colorBlack"
+            tools:text="Large eggs"
+            />
+
+    </LinearLayout>
+</FrameLayout>

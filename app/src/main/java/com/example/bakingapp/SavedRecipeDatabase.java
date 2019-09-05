@@ -17,7 +17,7 @@ import com.example.bakingapp.data.StepConverter;
 public abstract class SavedRecipeDatabase extends RoomDatabase {
 
     private static final Object LOCK = new Object();
-    private static final String DATABASE_NAME = "saved_recipes";
+    private static final String DATABASE_NAME = "favorite_recipes";
     private static SavedRecipeDatabase sInstance;
 
     public static SavedRecipeDatabase getInstance(Context context) {

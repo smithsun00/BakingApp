@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.media.session.MediaButtonReceiver;
 import android.support.v4.media.session.MediaSessionCompat;
@@ -34,10 +36,13 @@ import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.squareup.picasso.Picasso;
 
 public class StepDetailsFragment extends Fragment implements ExoPlayer.EventListener {
 
     public static final String TAG = StepDetailsFragment.class.getSimpleName();
+    public static final String KEY_PLAYER_POSITION = "player-position";
+    public static final String KEY_PLAYER_STATE = "player-state";
 
     private FragmentStepDetailsBinding mBinder;
     private Context mContext;
@@ -48,6 +53,10 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
     private PlaybackStateCompat.Builder mStateBuilder;
 
     private OnNextOrPreviousStepClickListener mOnNextOrPreviousStepClicked;
+
+    private long mPlayerPosition;
+    private boolean mPlayerState;
+    private StepData mStepData;
 
     public interface OnNextOrPreviousStepClickListener {
         void onClick(boolean nextStep);
@@ -69,92 +78,139 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
                              Bundle savedInstanceState) {
         mContext = getContext();
 
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(KEY_PLAYER_POSITION)) {
+                mPlayerPosition = savedInstanceState.getLong(KEY_PLAYER_POSITION);
+            }
+            if (savedInstanceState.containsKey(KEY_PLAYER_STATE)) {
+                mPlayerState = savedInstanceState.getBoolean(KEY_PLAYER_STATE);
+            }
+        }else{
+            mPlayerPosition = 0;
+            mPlayerState = true;
+        }
+
         mBinder = FragmentStepDetailsBinding.inflate(inflater, container, false);
 
-        StepData step = RecipeDataUtils.getInstance().getCurrentStepData();
+        mStepData = RecipeDataUtils.getInstance().getCurrentStepData();
 
-        if(step == null){
+        if (mStepData == null) {
             throw new NullPointerException("Current step data is null");
         }
 
-        mBinder.stepDescriptionTv.setText(step.getDescription());
+        mBinder.stepDescriptionTv.setText(mStepData.getDescription());
         mBinder.stepVideoPlayer.setDefaultArtwork(BitmapFactory.decodeResource
                 (getResources(), R.drawable.movie_loading_image));
+
+        // Show thumbnail image if exists
+        if (mStepData.getThumbnail_url() != null && !mStepData.getThumbnail_url().equals("")) {
+            mBinder.stepThumbnailIv.setVisibility(View.VISIBLE);
+            Picasso.get().load(mStepData.getThumbnail_url()).into(mBinder.stepThumbnailIv);
+        } else {
+            mBinder.stepThumbnailIv.setVisibility(View.INVISIBLE);
+        }
 
         mPlayerView = mBinder.stepVideoPlayer;
 
         // show next/previous arrows
-        if(RecipeDataUtils.getInstance().hasNextStep()){
+        if (RecipeDataUtils.getInstance().hasNextStep()) {
             mBinder.nextStepIv.setVisibility(View.VISIBLE);
             mBinder.nextStepIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(mOnNextOrPreviousStepClicked != null)
-                    {
+                    if (mOnNextOrPreviousStepClicked != null) {
                         boolean nextStepBtnClicked = getContext().getResources().getBoolean(R.bool.next_step_arrow_clicked);
                         mOnNextOrPreviousStepClicked.onClick(nextStepBtnClicked);
                     }
                 }
             });
-        }else{
+        } else {
             mBinder.nextStepIv.setVisibility(View.INVISIBLE);
         }
 
-        if(RecipeDataUtils.getInstance().hasPreviousStep()){
+        if (RecipeDataUtils.getInstance().hasPreviousStep()) {
             mBinder.previusStepIv.setVisibility(View.VISIBLE);
             mBinder.previusStepIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(mOnNextOrPreviousStepClicked != null)
-                    {
+                    if (mOnNextOrPreviousStepClicked != null) {
                         boolean previousStepBtnClicked = getContext().getResources().getBoolean(R.bool.previous_step_arrow_clicked);
                         mOnNextOrPreviousStepClicked.onClick(previousStepBtnClicked);
                     }
                 }
             });
-        }else{
+        } else {
             mBinder.previusStepIv.setVisibility(View.INVISIBLE);
         }
-
-        initializeMediaSession();
-        initializePlayer(Uri.parse(step.getVideo_url()));
 
         return mBinder.getRoot();
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        releasePlayer();
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
 
-        if(mMediaSession != null) {
-            mMediaSession.setActive(false);
-            mMediaSession.release();
-            mMediaSession = null;
+        outState.putLong(KEY_PLAYER_POSITION, mPlayerPosition);
+        outState.putBoolean(KEY_PLAYER_STATE, mPlayerState);
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (Util.SDK_INT > 23) {
+            // Show Media Player if no video url is set
+            if (mStepData.getVideo_url() != null && !mStepData.getVideo_url().equals("")){
+                mBinder.stepVideoPlayer.setVisibility(View.VISIBLE);
+                initializeMediaSession();
+                initializePlayer(Uri.parse(mStepData.getVideo_url()));
+            }else{
+                mBinder.stepVideoPlayer.setVisibility(View.INVISIBLE);
+            }
         }
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onResume() {
+        super.onResume();
+        if ((Util.SDK_INT <= 23 || mExoPlayer == null)) {
 
-        releasePlayer();
-        if(mMediaSession != null) {
-            mMediaSession.setActive(false);
-            mMediaSession.release();
-            mMediaSession = null;
+            // Show Media Player if no video url is set
+            if (mStepData.getVideo_url() != null && !mStepData.getVideo_url().equals("")){
+                mBinder.stepVideoPlayer.setVisibility(View.VISIBLE);
+                initializeMediaSession();
+                initializePlayer(Uri.parse(mStepData.getVideo_url()));
+            }else{
+                mBinder.stepVideoPlayer.setVisibility(View.INVISIBLE);
+            }
         }
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onPause() {
+        super.onPause();
 
-        releasePlayer();
-        if(mMediaSession != null) {
-            mMediaSession.setActive(false);
-            mMediaSession.release();
-            mMediaSession = null;
+        if (Util.SDK_INT <= 23) {
+            releasePlayer();
+            if (mMediaSession != null) {
+                mMediaSession.setActive(false);
+                mMediaSession.release();
+                mMediaSession = null;
+            }
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        if (Util.SDK_INT > 23) {
+            releasePlayer();
+            if (mMediaSession != null) {
+                mMediaSession.setActive(false);
+                mMediaSession.release();
+                mMediaSession = null;
+            }
         }
     }
 
@@ -241,20 +297,29 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
             mExoPlayer.addListener(this);
 
             // Prepare the MediaSource.
-            String userAgent = Util.getUserAgent(mContext, "ClassicalMusicQuiz");
+            String userAgent = Util.getUserAgent(mContext, "BakingApp");
             MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
                     mContext, userAgent), new DefaultExtractorsFactory(), null, null);
             mExoPlayer.prepare(mediaSource);
-            mExoPlayer.setPlayWhenReady(true);
+            mExoPlayer.setPlayWhenReady(mPlayerState);
+            mExoPlayer.seekTo(mPlayerPosition);
         }
     }
 
     private void releasePlayer() {
         if(mExoPlayer == null) return;
 
+        updatePlayerTrackers();
         mExoPlayer.stop();
         mExoPlayer.release();
         mExoPlayer = null;
+    }
+
+    private void updatePlayerTrackers(){
+        if(mExoPlayer == null) return;
+
+        mPlayerState = mExoPlayer.getPlayWhenReady();
+        mPlayerPosition = mExoPlayer.getCurrentPosition();
     }
 
     private class MySessionCallback extends MediaSessionCompat.Callback {

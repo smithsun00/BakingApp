@@ -26,6 +26,7 @@ public class RecipeDataUtils {
     private boolean isSavedRecipesListVisible = false;
     private int mCurrentStepIndex;
     private RecipeData mCurrentRecipe;
+    private RecipeData mCurrentWidgetRecipe;
 
     private ArrayList<RecipeData> mRecipeList;
     private ArrayList<RecipeData> mSavedRecipeList;
@@ -34,6 +35,14 @@ public class RecipeDataUtils {
         mRecipeList = new ArrayList<>();
         mSavedRecipeList = new ArrayList<>();
         mCurrentStepIndex = INVALID_STEP_INDEX;
+    }
+
+    public RecipeData getCurrentWidgetRecipe(){
+        return mCurrentWidgetRecipe;
+    }
+
+    public void setCurrentWidgetRecipe(RecipeData recipe){
+        mCurrentWidgetRecipe = recipe;
     }
 
     public void setCurrentRecipe(RecipeData recipe)
@@ -54,12 +63,40 @@ public class RecipeDataUtils {
         isSavedRecipesListVisible = isVisible;
     }
 
+    public void AddRecipeToFavorite(RecipeData recipe){
+        if(isRecipeInFavorite(recipe.getId())){
+            return;
+        }
+
+        mSavedRecipeList.add(recipe);
+    }
+
+    public void RemoveRecipeToFavorite(RecipeData recipe){
+        if(!isRecipeInFavorite(recipe.getId())){
+            return;
+        }
+
+        mSavedRecipeList.remove(recipe);
+    }
+
     public boolean isCurrentRecipeInFavorite(){
         RecipeData recipe = getCurrentRecipe();
 
         if(recipe != null && mSavedRecipeList != null && mSavedRecipeList.size() > 0){
             for(int i = 0; i < mSavedRecipeList.size(); i++){
                 if(recipe.getId() == mSavedRecipeList.get(i).getId()){
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isRecipeInFavorite(int recipeId){
+        if(mSavedRecipeList != null && mSavedRecipeList.size() > 0){
+            for(int i = 0; i < mSavedRecipeList.size(); i++){
+                if(recipeId == mSavedRecipeList.get(i).getId()){
                     return true;
                 }
             }
@@ -82,10 +119,32 @@ public class RecipeDataUtils {
 
     public void setmSavedRecipeList(ArrayList<RecipeData> recipeList){
         mSavedRecipeList = recipeList;
+
+        // Get current recipe which is displayed in the widget:
+        for(RecipeData recipe: mSavedRecipeList){
+            if(recipe.getInWidget()){
+                // Set as current widget recipe
+                mCurrentWidgetRecipe = recipe;
+            }
+        }
     }
 
     public ArrayList<RecipeData> getRecipeList(){
         return isSavedRecipesListVisible ? mSavedRecipeList : mRecipeList;
+    }
+
+    public ArrayList<RecipeData> getFavoriteRecipeList(){
+        return mSavedRecipeList;
+    }
+
+    public RecipeData getRecipeFromFavoriteByName(String recipeName){
+        if(mSavedRecipeList != null) {
+            for (RecipeData recipe : mSavedRecipeList) {
+                if(recipe.getName().equals(recipeName)) return recipe;
+            }
+        }
+
+        return null;
     }
 
     public ArrayList<StepData> getSteps(){

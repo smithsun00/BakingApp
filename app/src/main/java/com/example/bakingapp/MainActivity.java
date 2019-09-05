@@ -17,6 +17,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import com.example.bakingapp.IdlingResource.SimpleIdlingResource;
 import com.example.bakingapp.adapters.RecipeListAdapter;
 import com.example.bakingapp.callbacks.IGetRecipeDataListCallback;
 import com.example.bakingapp.callbacks.IInternetConnectionCallback;
@@ -31,6 +32,8 @@ import com.example.bakingapp.utils.UIUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+
+// todo: fix back button from RecipeDetailsActivity -> for some reason when back from widget -> back reload same activity
 public class MainActivity extends AppCompatActivity
 implements RecipeListAdapter.ListItemClickListener,
         IInternetConnectionCallback,
@@ -43,28 +46,29 @@ implements RecipeListAdapter.ListItemClickListener,
     private float mScrollListPosition;
     private MenuItem mSortByMenuItem;
     private ActivityMainBinding mBinder;
-    private boolean mBlockLoadingContentForActivity;
+    private String mWidgetRecipeName;
+
+    @Nullable
+    private SimpleIdlingResource mIdlingResource;
+
+    public SimpleIdlingResource getIdlingResource()
+    {
+        if(mIdlingResource == null)
+        {
+            mIdlingResource = new SimpleIdlingResource();
+        }
+
+        return mIdlingResource;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mBlockLoadingContentForActivity = false;
-        // Get recipe from widget if set:
-        RecipeData recipe = null;
+        mWidgetRecipeName = null;
         Intent widgetIntent = getIntent();
-        if (widgetIntent != null && widgetIntent.hasExtra(BakingAppWidget.EXTRA_RECIPE)) {
-            recipe = widgetIntent.getParcelableExtra(BakingAppWidget.EXTRA_RECIPE);
-        }
-
-        // If entered app using the widget -> go to details activity of the selected recipe
-        if (recipe != null) {
-            RecipeDataUtils.getInstance().setCurrentRecipe(recipe);
-
-            mBlockLoadingContentForActivity = true;
-            Intent recipeDetailsActivityIntent = new Intent(this, RecipeDetailsActivity.class);
-            startActivity(recipeDetailsActivityIntent);
-            return;
+        if (widgetIntent != null && widgetIntent.hasExtra(BakingAppWidget.EXTRA_RECIPE_NAME)) {
+            mWidgetRecipeName = widgetIntent.getStringExtra(BakingAppWidget.EXTRA_RECIPE_NAME);
         }
 
         // Get last scroll position if saved
@@ -76,6 +80,12 @@ implements RecipeListAdapter.ListItemClickListener,
         }
 
         LoadActivityContent();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getIdlingResource().setIdleState(false);
     }
 
     private void LoadActivityContent(){
@@ -106,15 +116,46 @@ implements RecipeListAdapter.ListItemClickListener,
     @Override
     protected void onResume() {
         super.onResume();
-
+        Intent widgetIntent = getIntent();
+        if (widgetIntent != null && widgetIntent.hasExtra(BakingAppWidget.EXTRA_RECIPE_NAME)) {
+            mWidgetRecipeName = widgetIntent.getStringExtra(BakingAppWidget.EXTRA_RECIPE_NAME);
+//            widgetIntent.removeExtra(BakingAppWidget.EXTRA_RECIPE_NAME);
+        }
+        else{
+            mWidgetRecipeName = null;
+        }
         // This load content incase we got here from RecipeDetailsActivity if app opened with Widget
         // and then we press back.
         // This prevents from skiping loading content for activity.
-        if(mBinder == null && !mBlockLoadingContentForActivity) {
-            LoadActivityContent();
+        if(RecipeDataUtils.getInstance().getCurrentWidgetRecipe() != null) {
+            if(!TryLoadWidgetRecipe()){
+                LoadActivityContent();
+            }
         }
-        // Reset block after skiping once.
-        mBlockLoadingContentForActivity = false;
+    }
+
+    private boolean TryLoadWidgetRecipe(){
+
+        // Get recipe from widget if set:
+        RecipeData recipe = null;
+        if (mWidgetRecipeName != null) {
+            recipe = RecipeDataUtils.getInstance().getRecipeFromFavoriteByName(mWidgetRecipeName);
+        }
+
+        // If entered app using the widget -> go to details activity of the selected recipe
+        if (recipe != null) {
+            RecipeDataUtils.getInstance().setCurrentRecipe(recipe);
+
+            RecipeDataUtils.getInstance().setCurrentWidgetRecipe(recipe);
+            mWidgetRecipeName = null;
+            Intent recipeDetailsActivityIntent = new Intent(this, RecipeDetailsActivity.class);
+            startActivity(recipeDetailsActivityIntent);
+            return true;
+        }
+
+        RecipeDataUtils.getInstance().setCurrentWidgetRecipe(null);
+
+        return false;
     }
 
     @Override
@@ -150,6 +191,12 @@ implements RecipeListAdapter.ListItemClickListener,
             @Override
             public void onChanged(List<RecipeData> recipeData) {
                 RecipeDataUtils.getInstance().setmSavedRecipeList((ArrayList<RecipeData>) recipeData);
+
+                // Get recipe from widget if set:
+                if(TryLoadWidgetRecipe()){
+                    return;
+                }
+
                 if(RecipeDataUtils.getInstance().getIsSavedRecipeListVisible()){
                     if(RecipeDataUtils.getInstance().hasSavedRecipes()) {
                         // if saved recipes list is currently visible -> update UI:
@@ -211,6 +258,19 @@ implements RecipeListAdapter.ListItemClickListener,
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mViewModel.GetSavedRecipesList().hasActiveObservers()) {
+            mViewModel.GetSavedRecipesList().removeObservers(this);
+        }
+    }
+
+    @Override
     public void onRecipeDataCallback(final ArrayList<RecipeData> recipeData) {
         // If no data exists -> show default no data view
         if(recipeData == null) {
@@ -230,6 +290,8 @@ implements RecipeListAdapter.ListItemClickListener,
                           @Override
                           public void run() {
                               updateUI(recipeData);
+
+                              getIdlingResource().setIdleState(true);
                           }
                       });
     }

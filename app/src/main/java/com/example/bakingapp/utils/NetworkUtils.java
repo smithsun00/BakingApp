@@ -27,7 +27,7 @@ import java.util.Scanner;
 
 public class NetworkUtils {
 
-    private final static String RECIPE_DATA_REST_API_URL = "insert your rest api url here!";
+    private final static String RECIPE_DATA_REST_API_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
     private String recipeJsonData;
     private static boolean offlineMode = false;
@@ -44,66 +44,30 @@ public class NetworkUtils {
             @Override
             public void run() {
 
-                if(!context.getResources().getBoolean(R.bool.test_local_response))
-                {
-                    try {
+                try {
 
-                        URL url = new URL(RECIPE_DATA_REST_API_URL);
-                        String recipeDataListResponse = GetResponseFromHttpUrl(url);
+                    URL url = new URL(RECIPE_DATA_REST_API_URL);
+                    String recipeDataListResponse = GetResponseFromHttpUrl(url);
 
-                        final ArrayList<RecipeData> recipeDataList = ParseJsonDataIntoRecipeData(recipeDataListResponse);
-
-                        // Check if ViewModel was not destroyed together with its Activity
-                        executors.mainThread().execute(new Runnable() {
-                            @Override
-                            public void run() {
-                                if(iCallback != null)
-                                    iCallback.onRecipeDataCallback(recipeDataList);
-                            }
-                        });
-                    }
-                    catch (Exception e)
-                    {
-                        e.printStackTrace();
-                        if(iCallback != null)
-                            iCallback.onRecipeDataCallback(null);
-                    }
-                }else{
-                    // get local recipe data from file
-                    String recipeDataListResponse = loadJSONFromAsset(context);
                     final ArrayList<RecipeData> recipeDataList = ParseJsonDataIntoRecipeData(recipeDataListResponse);
 
+                    // Check if ViewModel was not destroyed together with its Activity
+                    executors.mainThread().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(iCallback != null)
+                                iCallback.onRecipeDataCallback(recipeDataList);
+                        }
+                    });
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
                     if(iCallback != null)
-                        iCallback.onRecipeDataCallback(recipeDataList);
+                        iCallback.onRecipeDataCallback(null);
                 }
             }
         });
-    }
-
-    // Read from local file
-    // Taken from
-    // https://stackoverflow.com/questions/13814503/reading-a-json-file-in-android
-    private static String loadJSONFromAsset(Context context) {
-        String json = null;
-        try {
-            InputStream is = context.getAssets().open("baking.json");
-
-            int size = is.available();
-
-            byte[] buffer = new byte[size];
-
-            is.read(buffer);
-
-            is.close();
-
-            json = new String(buffer, "UTF-8");
-
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
     }
 
     public static ArrayList<StepData> ParseStepDataListFromJson(String jsonString){
@@ -138,13 +102,27 @@ public class NetworkUtils {
         return gson.toJson(ingredientList);
     }
 
+    public static RecipeData ParseRecipeDataToJson(String json){
+        try{
+            Gson gson = new Gson();
+
+            return gson.fromJson(json, new TypeToken<RecipeData>(){}.getType());
+        }catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String ParseRecipeDataToJson(RecipeData recipe){
+        Gson gson = new Gson();
+        return gson.toJson(recipe);
+    }
+
     public static ArrayList<RecipeData> ParseJsonDataIntoRecipeData(String jsonString)
     {
         try
         {
-            JSONObject recipeDataContent = new JSONObject(jsonString);
-
-            JSONArray recipeDataList = recipeDataContent.getJSONArray("results");
+            JSONArray recipeDataList = new JSONArray(jsonString);
 
             int numRecipesInDataList = recipeDataList.length();
             ArrayList<RecipeData> recipeList = new ArrayList<>();
@@ -187,7 +165,7 @@ public class NetworkUtils {
                     stepList.add(new StepData(stepId, shortDescription, description, videoURL, thumbnailURL));
                 }
 
-                recipeList.add(new RecipeData(id, name, ingredientList, stepList, servings, image));
+                recipeList.add(new RecipeData(id, name, ingredientList, stepList, servings, image, false));
             }
 
             return recipeList;

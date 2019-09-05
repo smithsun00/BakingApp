@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    >
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/fragment_step_sv">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -50,6 +52,17 @@
                 tools:layout_editor_absoluteX="@dimen/layout_Editor_absolute_x" />
 
             <ImageView
+                android:id="@+id/step_thumbnail_iv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                app:resize_mode="fixed_width"
+                android:contentDescription="@string/step_card_thumbnail_image_cd"
+                app:layout_constraintTop_toBottomOf="@+id/seperator2"
+                tools:layout_editor_absoluteX="@dimen/layout_editor_absolute_x" />
+
+            <ImageView
                 android:id="@+id/previus_step_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,7 +73,7 @@
                 android:contentDescription="@string/next_step_arrow_button_cd"
                 android:src="@drawable/nextarraow"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/seperator2" />
+                app:layout_constraintTop_toBottomOf="@+id/step_thumbnail_iv" />
 
             <ImageView
                 android:id="@+id/next_step_iv"
@@ -72,7 +85,7 @@
                 android:contentDescription="@string/previous_step_arrow_button_cd"
                 android:src="@drawable/nextarraow"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/seperator2" />
+                app:layout_constraintTop_toBottomOf="@+id/step_thumbnail_iv" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

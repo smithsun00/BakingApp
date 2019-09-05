@@ -15,7 +15,7 @@ import java.util.ArrayList;
 @Entity(tableName = "recipe")
 public class RecipeData implements Parcelable {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "id")
     private int id;
     @ColumnInfo(name = "name")
@@ -28,8 +28,10 @@ public class RecipeData implements Parcelable {
     private int servings;
     @ColumnInfo(name = "image")
     private String image;
+    @ColumnInfo(name = "in_widget")
+    private boolean inWidget;
 
-    public RecipeData(int id, String name, ArrayList<IngredientData> ingredients, ArrayList<StepData> steps, int servings, String image)
+    public RecipeData(int id, String name, ArrayList<IngredientData> ingredients, ArrayList<StepData> steps, int servings, String image, boolean inWidget)
     {
         this.id = id;
         this.name = name;
@@ -37,6 +39,7 @@ public class RecipeData implements Parcelable {
         this.steps = steps;
         this.servings = servings;
         this.image = image;
+        this.inWidget = inWidget;
     }
 
     @Ignore
@@ -71,6 +74,14 @@ public class RecipeData implements Parcelable {
 
     public String getImage() {
         return image;
+    }
+
+    public boolean getInWidget() {
+        return inWidget;
+    }
+
+    public void setInWidget(boolean isInWidget) {
+        inWidget = isInWidget;
     }
 
     @Ignore

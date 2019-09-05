@@ -23,15 +23,11 @@
         android:background="@color/colorAccent"
         android:textStyle="bold|italic" />
 
-    <!-- Recipe's ingredients -->
-    <TextView
-        android:id="@+id/widget_ingredients_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/widget_ingredients_text_margin"
-        android:contentDescription="@string/widget_recipe_ingredients_content_Description"
-        android:text="@string/imgredients_card_text_placeholder"
-        android:textColor="@color/colorGreyDark"
-        android:textSize="@dimen/widget_ingredients_text_size" />
+    <!-- Recipe Logo -->
+    <ImageView
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/recipe_logo"/>
 
 </LinearLayout>
